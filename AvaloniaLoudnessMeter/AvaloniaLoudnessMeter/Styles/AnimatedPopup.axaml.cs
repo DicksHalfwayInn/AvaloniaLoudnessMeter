@@ -21,10 +21,10 @@ namespace AvaloniaLoudnessMeter
         /// </summary>
         private bool mFirstAnimation = true;
 
-         /// <summary>
-    /// Indicates if we have captured the opacity value yet
-    /// </summary>
-    private bool mOpacityCaptured = false;
+        /// <summary>
+        /// Indicates if we have captured the opacity value yet
+        /// </summary>
+        private bool mOpacityCaptured = false;
 
         /// <summary>
         /// Store the controls original Opacity at start up
@@ -299,14 +299,18 @@ namespace AvaloniaLoudnessMeter
                 // If we have not yet captured the opacity
                 if (!mOpacityCaptured)
                 {
-                    // Set flag to true
-                    mOpacityCaptured = true;
+                    Dispatcher.UIThread.InvokeAsync(()=>
+                    {
+                        // Set flag to true
+                        mOpacityCaptured = true;
 
-                    // Remember original controls opacity
-                    mOriginalOpacity = Opacity;
+                        // Remember original controls opacity
+                        mOriginalOpacity = Opacity;
 
-                    // Hide control
-              //      Opacity = 0;
+                        // Hide control
+                        Opacity = 0;
+                    });
+                    
                 }
 
                 mSizingTimer.Change(200, int.MaxValue);
