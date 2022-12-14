@@ -1,0 +1,274 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:AvaloniaLoudnessMeter.ViewModels"
+			 xmlns:controls="clr-namespace:AvaloniaLoudnessMeter"
+
+             mc:Ignorable="d" d:DesignWidth="1048" d:DesignHeight="630"
+             x:Class="AvaloniaLoudnessMeter.Views.MainView"
+             Foreground="White"
+             Background="#171C2C">
+	
+	<!-- Design DataContext -->
+	<Design.DataContext>
+		<viewModels:MainViewModel />
+	</Design.DataContext>
+
+	<!-- The styles for this UserControl -->
+	<UserControl.Styles>
+
+		<!-- The style for the small button -->
+		<Style Selector="Button.small">
+			<Setter Property="FontSize" Value="12"/>
+			<Setter Property="Foreground" Value="White"/>
+			<Setter Property="Background" Value="{DynamicResource BrightBlueBrush}"/>
+			<Setter Property="CornerRadius" Value="20"/>
+			<Setter Property="Padding" Value="7, 2"/>
+		</Style>
+
+		<!-- The Background when is PointerOver -->
+		<Style Selector="Button:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="{DynamicResource BrightBlueHoverBrush}" />
+		</Style>
+
+		<!-- the TextBlock.Foreground color when is PointerOver -->
+		<Style Selector="Button:pointerover /template/ ContentPresenter">
+			<Setter Property="TextBlock.Foreground" Value="White"></Setter>
+		</Style>
+		
+		
+
+	</UserControl.Styles>
+
+	<!-- Main grid -->
+	<Grid Name="MainGrid" RowDefinitions="Auto, *, Auto" Background="White">
+
+		<!-- Channel Configuration Popup Closer -->
+		<Border Grid.Row="0" Grid.RowSpan="3"
+                IsVisible="{Binding ChannelConfigurationListIsOpen}"
+                PointerPressed="InputElement_OnPointerPressed"
+                Background="Transparent"
+                ZIndex="9" />
+
+		<!-- Channel Configuration Popup -->
+		<controls:AnimatedPopup
+			Open="True"
+			Grid.Row="0"
+			Grid.RowSpan="3"
+            Name="ChannelConfigurationPopup"
+            >
+			<Border Padding="20" Background="White" BorderThickness="1" BorderBrush="#ddd" CornerRadius="5">
+				<StackPanel>
+					<Label Content="Hello World"></Label>
+					<Label Content="Hello World"></Label>
+					<Label Content="Hello World"></Label>
+					<Label Content="Hello World"></Label>
+					<Label Content="Hello World"></Label>
+					<Label Content="Hello World"></Label>
+					<Label Content="Hello World"></Label>
+					<Label Content="Hello World"></Label>
+
+
+				</StackPanel>
+			</Border>
+		</controls:AnimatedPopup>
+
+		<!-- Channel Configuration Popup -->
+		<!--<Border Grid.Row="0"
+            Name="ChannelConfigurationPopup"
+            Classes="channel"
+            Classes.open="{Binding ChannelConfigurationListIsOpen}"
+            Grid.RowSpan="3"
+            Background="red"
+            ZIndex="2"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            >
+			<Label>Test</Label>
+		</Border>-->
+
+
+
+
+
+
+		<!--<controls:AnimatedPopup Grid.Row ="0"
+			Grid.RowSpan="3"
+			Name="ChannelConfigurationPopup"
+			Classes="channel"
+			Classes.open="{Binding ChannelConfigurationListIsOpen}"
+								
+			Background="Red"
+			ZIndex="2"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Bottom">
+			
+			<Label Content="Hello World" Foreground="Red" Background="Black"></Label>
+		</controls:AnimatedPopup>-->
+
+		<!-- Channel Configuration Popup -->
+
+
+		<!-- Title Bar -->
+		<Grid Grid.Row="0" Background="{DynamicResource MediumGreyBrush}" Height="60" ColumnDefinitions="Auto, Auto, *, Auto, Auto">
+
+			<Grid.Styles>
+				<Style Selector="Button">
+					<Setter	Property="Background" Value="Transparent" />
+					<Setter Property="Width" Value="45" />
+				</Style>
+				<Style Selector="Button /template/ ContentPresenter">
+					<Setter Property="Transitions">
+						<Transitions>
+							<TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.2"></TransformOperationsTransition>
+						</Transitions>
+					</Setter>
+				</Style>
+				<Style Selector="Button:pointerover /template/ ContentPresenter">
+					<Setter	Property="Background" Value="Transparent" />
+					<Setter Property="RenderTransform" Value="scale(1.11)" />
+					<Setter Property="Opacity" Value="0.6" />
+				</Style>
+
+				<Style Selector="Button Image">
+					<Setter Property="Width" Value="25"></Setter>
+				</Style>
+
+			</Grid.Styles>
+
+
+			<Button Grid.Column="0">
+				<!--<Image Source="{SvgImage /Assets/Images/Monitor.svg}" />-->
+				<Image Source="/Assets/Images/Monitor.png" />
+			</Button>
+
+			<Button Grid.Column="1">
+				<!--<Image Source="{SvgImage /Assets/Images/Lock.svg}" />-->
+				<Image Source="/Assets/Images/Lock.png" />
+			</Button>
+
+			<StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+				<Label Content="{Binding BoldTitle}" FontSize="24" FontWeight="Black"></Label>
+				<Label Content="{Binding RegularTitle}" FontSize="24"></Label>
+			</StackPanel>
+
+			<Button Grid.Column="3">
+				<!--<Image Source="{SvgImage /Assets/Images/Export.svg}" />-->
+				<Image Source="/Assets/Images/Export.png" />
+			</Button>
+
+			<Button Grid.Column="4">
+				<!--<Image Source="{SvgImage /Assets/Images/Cog.svg}" />-->
+				<Image Source="/Assets/Images/Cog.png" />
+			</Button>
+
+
+		</Grid>
+
+		<!-- Main Area -->
+		<Grid Grid.Row="1" ColumnDefinitions="Auto, Auto, *" Background="#1a1c20">
+
+			<!-- Volume Bar -->
+			<Grid Grid.Column="0" Width="150" RowDefinitions="*, Auto, Auto" Margin="0, 20">
+
+				<!-- Volume Meter Gauge -->
+				<Grid Grid.Row="0"
+					  Margin="10, 0"
+					  RowDefinitions="3*, 3*, 3*, 9*, 5*, 4*, 9*, 9*, 9*, 6*, Auto "
+					  ColumnDefinitions="Auto, *, Auto, Auto">
+					<Grid.Styles>
+						<Style Selector="Label">
+							<Setter Property="Foreground" Value="White"></Setter>
+							<Setter Property="FontSize" Value="12"></Setter>
+							<Setter Property="HorizontalAlignment" Value="Right"></Setter>
+							<Setter Property="Padding" Value="0"></Setter>
+						</Style>
+					</Grid.Styles>
+
+					<Label Grid.Column="0" Grid.Row="0">0 —</Label>
+					<Label Grid.Column="0" Grid.Row="1">-3 —</Label>
+					<Label Grid.Column="0" Grid.Row="2">-6 —</Label>
+					<Label Grid.Column="0" Grid.Row="3">-9 —</Label>
+					<Label Grid.Column="0" Grid.Row="4">-18 —</Label>
+					<Label Grid.Column="0" Grid.Row="5">-23 —</Label>
+					<Label Grid.Column="0" Grid.Row="6">-27 —</Label>
+					<Label Grid.Column="0" Grid.Row="7">-36 —</Label>
+					<Label Grid.Column="0" Grid.Row="8">-45 —</Label>
+					<Label Grid.Column="0" Grid.Row="9">-54 —</Label>
+					<Label Grid.Column="0" Grid.Row="10"></Label>
+
+					<!-- Volume Bar -->
+					<Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="11" Width="20" RowDefinitions="23*, 37*">
+						<Rectangle Grid.Row="0" Margin="0, 8, 0, -8" Fill="#b05c4e" Width="20"></Rectangle>
+						<Rectangle Grid.Row="1" Margin="0, 8, 0, 0" Fill="White" Width="20"></Rectangle>
+					</Grid>
+
+					<Label Grid.Column="2" Grid.Row="0">—</Label>
+					<Label Grid.Column="2" Grid.Row="1">—</Label>
+					<Label Grid.Column="2" Grid.Row="2">—</Label>
+					<Label Grid.Column="2" Grid.Row="3">—</Label>
+					<Label Grid.Column="2" Grid.Row="4">—</Label>
+					<Label Grid.Column="2" Grid.Row="5">—</Label>
+					<Label Grid.Column="2" Grid.Row="6">—</Label>
+					<Label Grid.Column="2" Grid.Row="7">—</Label>
+					<Label Grid.Column="2" Grid.Row="8">—</Label>
+					<Label Grid.Column="2" Grid.Row="9">—</Label>
+					<Label Grid.Column="2" Grid.Row="10"></Label>
+
+					<!-- Arrow -->
+					<Canvas Grid.Row="0" Grid.Column="3" Grid.RowSpan="11" Width="20">
+						<Rectangle Canvas.Top="0" Fill="White" Width="20" Height="20"></Rectangle>
+					</Canvas>
+
+				</Grid>
+
+				<!--  LUFS Label -->
+				<Label Grid.Row="1" Foreground="White" FontSize="20" HorizontalAlignment="Center">LUFS</Label>
+
+				<!-- Volume Bar Buttons -->
+				<StackPanel  Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+
+
+					<Button Classes="small" CornerRadius="30" Width="30" Height="30" Padding="3" Margin="0, 0, 20, 0">
+						<Image Margin="5, 0, 2, 0" Source="/Assets/Images/DoubleArrow.png" />
+					</Button>
+					<Button Classes="small">INT-LRA</Button>
+				</StackPanel>
+			</Grid>
+
+			<!-- Details Panel -->
+			<StackPanel Grid.Column="1" Width="170" Margin="0, 15, 10, 15">
+				<controls:LargeLabelControl LargeText="-21.1 LUFS" SmallText="SHORT TERM" />
+				<controls:LargeLabelControl LargeText="-20.7 LUFS" SmallText="INTEGRATED" Background="{DynamicResource LightBlueBrush}"/>
+				<controls:LargeLabelControl LargeText="9.5 LU" SmallText="LOUDNESS RANGE" />
+				<controls:LargeLabelControl LargeText="11.5 LU" SmallText="REALTIME DYNAMICS" />
+				<controls:LargeLabelControl LargeText="20.5 LU" SmallText="AVG. DYNAMIC (PLR)" Margin="0, 0, 0, 13" />
+
+				<controls:LargeLabelControl LargeText="-9.8 LUFS" SmallText="MOMENTARY MAX" Classes="button" />
+				<controls:LargeLabelControl LargeText="-15.1 LUFS" SmallText="SHORT TERM MAX" Classes="button" />
+				<controls:LargeLabelControl LargeText="0.7dB" SmallText="TRUE PEAK MAX" Classes="button" Margin="0, 0, 0, 10" />
+
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+					<Button Classes="small" Margin="0, 0, 20, 0">AUTO</Button>
+					<Button Classes="small" FontSize="20" FontFamily="Arial" Background="{DynamicResource FadedRedBrush}">X</Button>
+				</StackPanel>
+
+			</StackPanel>
+			<!-- Graph -->
+			<Rectangle Grid.Column="2" Fill="Black"></Rectangle>
+
+		</Grid>
+
+		<!-- Bottom Bar -->
+		<Grid Grid.Row="2" Margin="20,10" ColumnDefinitions="Auto, Auto, *, Auto, Auto, Auto, Auto, Auto">
+			<Button Grid.Column="0" Name="ChannelConfigurationButton" Command="{Binding #ChannelConfigurationPopup.BeginOpen}" Margin="0, 0, 8, 0">Stereo</Button>
+			<Button Grid.Column="1">YouTube</Button>
+			<Button Grid.Column="3" Margin="0, 0, 8, 0" >10 SEC</Button>
+			<Button Grid.Column="4" Margin="0, 0, 8, 0" >CONTINUOUS</Button>
+			<Rectangle Grid.Column="5" Fill="Orange" Width="30" Margin="0, 0, 8, 0"></Rectangle>
+			<Rectangle Grid.Column="6" Fill="Red" Width="30"></Rectangle>
+		</Grid>
+	</Grid>
+
+</UserControl>
