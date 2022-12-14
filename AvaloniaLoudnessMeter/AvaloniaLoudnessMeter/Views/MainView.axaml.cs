@@ -43,12 +43,17 @@ namespace AvaloniaLoudnessMeter.Views
             var position = mChannelConfigButton.TranslatePoint(new Point(), mMainGrid) ??
                            throw new Exception("Cannot get TranslatePoint from Configuration Button");
 
-            // Set margin of popup so it appears bottom left of button
-            mChannelConfigPopup.Margin = new Thickness(
-                position.X,
-                0,
-                0,
-                mMainGrid.Bounds.Height - position.Y - mChannelConfigButton.Bounds.Height);
+            Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                // Set margin of popup so it appears bottom left of button
+                mChannelConfigPopup.Margin = new Thickness(
+                    position.X,
+                    0,
+                    0,
+                    mMainGrid.Bounds.Height - position.Y - mChannelConfigButton.Bounds.Height);
+
+            });
+
 
 
 
